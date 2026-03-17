@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>عيد سعيد</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Cairo', sans-serif;
+  overflow: hidden;
+  color: #00fff7;
+}
+
+/* الخلفية Neon Gradient animate subtle */
+body::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(120deg, #0fffcf, #203a43, #2c5364, #00b3b3);
+  background-size: 400% 400%;
+  animation: gradientMove 20s ease infinite;
+  z-index: 0;
+}
+
+@keyframes gradientMove {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* الكارد */
+.card {
+  position: relative;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(20px);
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  width: 400px;
+  box-shadow: 0 0 80px rgba(0,255,255,0.4);
+  z-index: 2;
+}
+
+/* الهلال Neon */
+.moon {
+  font-size: 40px;
+  margin-bottom: 10px;
+  color: #00fff7;
+  text-shadow:
+    0 0 5px #00fff7,
+    0 0 10px #00fff7,
+    0 0 20px #00fff7,
+    0 0 40px #00b3b3;
+  animation: glowMoon 1.5s infinite alternate;
+}
+
+@keyframes glowMoon {
+  from { text-shadow: 0 0 5px #00fff7,0 0 10px #00fff7,0 0 20px #00fff7,0 0 40px #00b3b3;}
+  to { text-shadow: 0 0 15px #00fff7,0 0 25px #00fff7,0 0 40px #00fff7,0 0 60px #00b3b3;}
+}
+
+/* الاسم glow */
+h1 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #00fff7;
+  text-shadow:
+    0 0 5px #00fff7,
+    0 0 10px #00fff7,
+    0 0 20px #00fff7,
+    0 0 40px #00b3b3;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #00fff7; }
+  to { text-shadow: 0 0 40px #00b3b3; }
+}
+
+/* الصورة neon subtle */
+img {
+  width: 240px;
+  border-radius: 15px;
+  margin: 15px 0;
+  box-shadow: 0 0 20px #00fff7, 0 0 40px #00b3b3, 0 0 60px #00fff7;
+  animation: imgGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes imgGlow {
+  from { box-shadow: 0 0 20px #00fff7,0 0 40px #00b3b3,0 0 60px #00fff7; }
+  to { box-shadow: 0 0 30px #00fff7,0 0 50px #00b3b3,0 0 80px #00fff7; }
+}
+
+/* الرسالة neon typing + blink */
+p#message {
+  font-size: 16px;
+  line-height: 1.8;
+  font-weight: bold;
+  color: #00fff7;
+  text-shadow:
+    0 0 5px #00fff7,
+    0 0 10px #00fff7,
+    0 0 20px #00fff7,
+    0 0 40px #00b3b3;
+  min-height: 140px;
+  white-space: pre-wrap;
+}
+
+@keyframes blink {
+  0%, 49%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* floating hearts & roses neon */
+.float {
+  position: absolute;
+  animation: floatUp linear infinite;
+  color: #00fff7;
+  text-shadow:
+    0 0 5px #00fff7,
+    0 0 10px #00fff7,
+    0 0 20px #00fff7;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh) scale(1); opacity: 1; }
+  to { transform: translateY(-10vh) scale(1.3); opacity: 0; }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="moon">🌙</div>
+
+<h1 id="name"></h1>
+
+<img src="https://i.ibb.co/yBRhzPdT/unnamed.jpg">
+
+<p id="message"></p>
+
+<audio id="song" autoplay loop>
+  <source src="https://cdn1.esm3.com/music/2687/esm3.com.81791.mp3" type="audio/mpeg">
+</audio>
+
+</div>
+
+<script>
+/* كتابة الاسم */
+let nameText = "كل سنة وانتي طيبة يا [اسمها]";
+let i = 0;
+function typingName() {
+  if (i < nameText.length) {
+    document.getElementById("name").innerHTML += nameText.charAt(i);
+    i++;
+    setTimeout(typingName, 60);
+  }
+}
+typingName();
+
+/* كتابة الرسالة neon typing + blink */
+const fullMessage = `عيد سعيد عليكي سنة 💖✨
+يارب دايمًا تبقي مبسوطة والدنيا تضحكلك على طول 💙
+بجد وجودك بيخلي كل حاجة أحلى 🌸
+
+Happy Eid 🤍
+Wishing you a year full of happiness, love, and beautiful moments ✨`;
+
+let j = 0;
+function typingMessage() {
+  if (j < fullMessage.length) {
+    const span = document.createElement('span');
+    span.innerText = fullMessage[j];
+    span.style.animation = 'blink 1s infinite';
+    document.getElementById("message").appendChild(span);
+    j++;
+    setTimeout(typingMessage, 50);
+  }
+}
+typingMessage();
+
+/* تشغيل الموسيقى */
+window.addEventListener("load", () => {
+  let audio = document.getElementById("song");
+  audio.play().catch(() => {
+    document.body.addEventListener("click", () => audio.play());
+  });
+});
+
+/* floating hearts & roses neon */
+const heartChars = ['❤','💖','💘','🌹'];
+function createFloating() {
+  for (let k = 0; k < 4; k++) {
+    const el = document.createElement("div");
+    el.className = "float";
+    el.innerHTML = heartChars[Math.floor(Math.random() * heartChars.length)];
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.fontSize = (Math.random() * 15 + 15) + "px";
+    const duration = Math.random() * 3 + 3;
+    el.style.animationDuration = duration + "s";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), duration * 1000);
+  }
+}
+setInterval(createFloating, 150);
+</script>
+
+</body>
+</html>
